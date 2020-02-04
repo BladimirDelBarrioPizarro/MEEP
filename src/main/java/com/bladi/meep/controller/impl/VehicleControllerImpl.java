@@ -22,8 +22,8 @@ public class VehicleControllerImpl implements VehicleController {
 
 
     @Override
-    public ResponseEntity<List<VehicleDTO>> getVehicles(String lowerwLeftLatLon, String upperRightLatLon, String companyZoneIds) {
+    public ResponseEntity<List<VehicleDTO>> getVehicles() {
         log.info(" -- GET /vehicles");
-        return new ResponseEntity(vehicleService.getVehicles(lowerwLeftLatLon,upperRightLatLon,companyZoneIds), HttpStatus.OK);
+        return new ResponseEntity(vehicleService.getVehicles(), HttpStatus.OK);
     }
 }

@@ -6,9 +6,11 @@ import com.bladi.meep.model.entity.Vehicle;
 import com.bladi.meep.model.mapper.VehicleMapper;
 import com.bladi.meep.service.VehicleService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -24,16 +26,17 @@ public class VehicleServiceImpl implements VehicleService {
         this.restTemplate = restTemplate;
     }
 
+    @Scheduled(fixedDelay = 60000)
     @Override
-    public List<Vehicle> getVehicles(String lowerwLeftLatLon, String upperRightLatLon, String companyZoneIds) {
+    public List<Vehicle> getVehicles() {
         String url = UriComponentsBuilder.fromUriString(properties.getPath())
-                .queryParam("lowerwLeftLatLon", lowerwLeftLatLon)
-                .queryParam("upperRightLatLon", upperRightLatLon)
-                .queryParam("companyZoneIds", companyZoneIds)
+                .queryParam("lowerwLeftLatLon", "38.711046,-9.160096")
+                .queryParam("upperRightLatLon", "38.739429,-9.137115")
+                .queryParam("companyZoneIds", "545,467,473")
                 .toUriString();
         Vehicle[] objectData;
         try{
-            log.info(" -- Calling vehicle service");
+            log.info(" -- Calling vehicle service {}", new Date());
             objectData = restTemplate.getForObject(url,Vehicle[].class);
         }catch (Exception ex){
             throw new RuntimeException(ex);
