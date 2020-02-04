@@ -1,6 +1,5 @@
 package com.bladi.meep.controller.impl;
 
-import com.bladi.meep.boot.properties.Properties;
 import com.bladi.meep.controller.VehicleController;
 import com.bladi.meep.model.dto.VehicleDTO;
 import com.bladi.meep.service.VehicleService;
