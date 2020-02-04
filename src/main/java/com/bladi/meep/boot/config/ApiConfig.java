@@ -8,9 +8,15 @@ import com.bladi.meep.service.VehicleService;
 import com.bladi.meep.service.impl.VehicleServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class ApiConfig {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     @Bean
     public Properties properties(){
@@ -18,8 +24,8 @@ public class ApiConfig {
     }
 
     @Bean
-    public VehicleService vehicleService(VehicleDao vehicleDao){
-        return new VehicleServiceImpl(vehicleDao);
+    public VehicleService vehicleService(VehicleDao vehicleDao,Properties properties,RestTemplate restTemplate){
+        return new VehicleServiceImpl(vehicleDao,properties,restTemplate);
     }
 
 

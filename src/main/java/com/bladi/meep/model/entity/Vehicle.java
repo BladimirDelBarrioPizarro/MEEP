@@ -1,4 +1,4 @@
-package com.bladi.meep.model;
+package com.bladi.meep.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
