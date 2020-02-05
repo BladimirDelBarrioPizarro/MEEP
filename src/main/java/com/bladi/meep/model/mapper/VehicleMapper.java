@@ -1,9 +1,13 @@
 package com.bladi.meep.model.mapper;
 
+import com.bladi.meep.model.dto.HttpErrorDTO;
 import com.bladi.meep.model.dto.VehicleDTO;
 import com.bladi.meep.model.entity.Vehicle;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,28 +44,16 @@ public class VehicleMapper {
                 .build();
 
     }
+
+    public static ResponseEntity<HttpErrorDTO> buildHttpErrorDTO(Integer code, HttpStatus statusText, String url, String message, String method, Date date) {
+        return new ResponseEntity<>(HttpErrorDTO.builder()
+                .code(code)
+                .statusText(statusText.toString())
+                .url(url)
+                .message(message)
+                .method(method)
+                .date(date.toString())
+                .build(), HttpStatus.NOT_FOUND);
+    }
 }
 
-/*
-
- {
-        "id": "DriveNow_12708820",
-        "name": "M-DX8437",
-        "x": -9.1873,
-        "y": 38.7392,
-        "licencePlate": "M-DX8437",
-        "range": 0,
-        "batteryLevel": 50,
-        "seats": 4,
-        "model": "MINI",
-        "resourceImageId": "vehicle_gen_dn",
-        "pricePerMinuteParking": 15.0,
-        "pricePerMinuteDriving": 29.0,
-        "realTimeData": true,
-        "engineType": "DIESEL",
-        "resourceType": "CAR",
-        "companyZoneId": 545
-    },
-
-/
- */

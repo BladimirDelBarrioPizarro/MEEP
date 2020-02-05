@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "vehicle")
-public class Vehicle implements Serializable {
+public class Vehicle extends RepresentationModel<Vehicle> implements Serializable {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private String id;

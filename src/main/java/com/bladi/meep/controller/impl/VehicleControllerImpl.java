@@ -6,13 +6,13 @@ import com.bladi.meep.service.VehicleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import java.util.List;
 
 @Slf4j
 public class VehicleControllerImpl implements VehicleController {
 
     private VehicleService vehicleService;
+
 
 
     public VehicleControllerImpl(VehicleService vehicleService) {

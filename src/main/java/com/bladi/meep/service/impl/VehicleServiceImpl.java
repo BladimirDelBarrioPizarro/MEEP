@@ -4,6 +4,7 @@ import com.bladi.meep.boot.properties.Properties;
 import com.bladi.meep.dao.VehicleDao;
 import com.bladi.meep.model.dto.VehicleDTO;
 import com.bladi.meep.model.entity.Vehicle;
+import com.bladi.meep.model.exceptions.HandleExceptionGetVehicles;
 import com.bladi.meep.model.mapper.VehicleMapper;
 import com.bladi.meep.service.VehicleService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class VehicleServiceImpl implements VehicleService {
         this.restTemplate = restTemplate;
     }
 
-    @Scheduled(fixedDelay = 60000)
+
     @Override
     public List<VehicleDTO> getVehicles() {
         String url = UriComponentsBuilder.fromUriString(properties.getPath())
@@ -44,13 +45,20 @@ public class VehicleServiceImpl implements VehicleService {
             List<Vehicle> all = setListVehicles(vehicles,vehiclesBBDD);
             return VehicleMapper.mapVehicleListToVehicleDTOList(all);
         }catch (Exception ex){
-            throw new RuntimeException(ex);
+            throw new HandleExceptionGetVehicles(ex);
         }
 
     }
 
+    //Invented business logic
     private List<Vehicle> setListVehicles(List<Vehicle> vehicles, List<Vehicle> vehiclesBBDD) {
         vehicles.addAll(vehiclesBBDD);
-        return vehicles.stream().filter(item -> item.getRange() > 50 ).collect(Collectors.toList());
+        List<Vehicle> vehiclesAll = vehicles.stream().distinct().collect(Collectors.toList());
+        return vehiclesAll.stream().filter(item -> item.getRange() > 50 ).collect(Collectors.toList());
+    }
+
+    @Scheduled(fixedDelay = 60000, initialDelay = 1000)
+    private void setTasks(){
+        getVehicles();
     }
 }
