@@ -40,6 +40,7 @@ public class VehicleServiceImpl implements VehicleService {
         try{
             log.info(" -- Calling vehicle service {}", new Date());
             objectData = restTemplate.getForObject(url,Vehicle[].class);
+            //Invented business logic
             List <Vehicle> vehicles = vehicleDao.saveAll(VehicleMapper.mapVehicleArrayToVehicleList(objectData));
             List<Vehicle> vehiclesBBDD = vehicleDao.findAll();
             List<Vehicle> all = setListVehicles(vehicles,vehiclesBBDD);
